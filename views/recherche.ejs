@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de la Recherche</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+
+<body>
+    <h1>Résultats de la Recherche</h1>
+    <ul>
+        <% results.forEach(function(article) { %>
+            <li>
+                <a href="/articles/<%= article.id %>"><%= article.title %></a> - <%= article.date %>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+
+</html>

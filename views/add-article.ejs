@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <form action="/articles/add" method="POST">
+            <div class="form-group">
+                <label for="titre">Titre :</label>
+                <input type="text" class="form-control" id="titre" name="Titre" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="contenu">Contenu :</label>
+                <textarea class="form-control" id="contenu" name="Description" required></textarea>
+            </div>
+        
+            <div class="form-group">
+                <label for="image">URL de l'image :</label>
+                <input type="text" class="form-control" id="image" name="image" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date :</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="auteur">Auteur :</label>
+                <input type="text" class="form-control" id="autheur" name="autheur" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="categorie">Catégorie :</label>
+                <select class="form-control" id="categorie" name="idcat" required>
+                    <% categories.forEach(categorie => { %>
+                        <option value="<%= categorie.IdCategorie %>"><%= categorie.Titre %></option>
+                    <% }); %>
+                </select>
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Ajouter l'article</button>
+        </form>
+    </div>
+
+    <!-- Optional: jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
