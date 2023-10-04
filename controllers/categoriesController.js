@@ -6,7 +6,6 @@ exports.getAddCategoryForm = (req, res) => {
         res.render('add-category');
   
 };
-
 exports.getAllCategories = (req, res) => {
     Category.getAllCategories(categories => {
         res.render('categories', { categories });
