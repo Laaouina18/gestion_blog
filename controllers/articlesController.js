@@ -1,6 +1,23 @@
 const db = require('../db');
 const Category = require('../models/CategoryModel');
 
+const multer = require('multer');
+
+// Set up storage and file naming
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/uploads'); // Set the destination folder where uploaded files will be stored
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // Set the file name to be unique
+  },
+});
+
+// Set up multer upload
+const multerUpload = multer({ storage: storage });
+
+// Now you can use multerUpload in your routes or controller functions
+
 exports.getAddArticleForm = (req, res) => {
     Category.getAllCategories(categories => {
         res.render('add-article', { categories });
@@ -9,9 +26,29 @@ exports.getAddArticleForm = (req, res) => {
 
 
 exports.getArticles = (req, res) => {
-    db.query('SELECT * FROM articles', (err, articles) => {
+ 
+        // Ensuite, récupérer tous les articles
+        db.query('SELECT * FROM articles', (err, articles) => {
+            if (err) throw err;
+
+            // Les résultats des deux requêtes sont disponibles ici
+            res.render('articles', {articles });
+        });
+   
+};
+
+exports.gethome = (req, res) => {
+    // Récupérer toutes les catégories
+    db.query('SELECT * FROM categories', (err, categories) => {
         if (err) throw err;
-        res.render('index', { articles });
+
+        // Ensuite, récupérer tous les articles
+        db.query('SELECT * FROM articles', (err, articles) => {
+            if (err) throw err;
+
+            // Les résultats des deux requêtes sont disponibles ici
+            res.render('index', { categories, articles });
+        });
     });
 };
 
@@ -33,17 +70,20 @@ exports.getArticleById = (req, res) => {
     });
 };
 
-
+// ... (autres imports)
 exports.createArticle = (req, res) => {
-    const { Titre, Description, date, image, autheur, idcat } = req.body;
+    const { Titre, Description, date, autheur, idcat } = req.body;
+    
+    // À ce stade, req.file contient les informations sur l'image téléchargée
+    const imageFilePath = req.file ? req.file.filename : null; // Vérifiez si une image a été téléchargée
 
     // Vérifiez si toutes les valeurs requises sont présentes dans la requête
-    if (!Titre || !Description || !date || !image || !autheur || !idcat) {
+    if (!Titre || !Description || !date || !autheur || !idcat || !imageFilePath) {
         return res.status(400).send("Toutes les données de l'article sont requises.");
     }
 
-    // Insérez les données dans la base de données
-    db.query('INSERT INTO articles (Titre, Description, date, image, autheur, idcat) VALUES (?, ?, ?, ?, ?, ?)', [Titre, Description, date, image, autheur, idcat], (err, result) => {
+    // Insérez les données (y compris le chemin de l'image) dans la base de données
+    db.query('INSERT INTO articles (Titre, Description, date, image, autheur, idcat) VALUES (?, ?, ?, ?, ?, ?)', [Titre, Description, date, imageFilePath, autheur, idcat], (err, result) => {
         if (err) {
             console.error("Erreur lors de l'insertion de l'article :", err);
             return res.status(500).send("Erreur serveur lors de l'insertion de l'article.");
@@ -51,6 +91,8 @@ exports.createArticle = (req, res) => {
         res.redirect('/articles');
     });
 };
+// ... (autres méthodes du contrôleur)
+
 
 exports.updateArticle = (req, res) => {
     const articleId = req.params.id;
