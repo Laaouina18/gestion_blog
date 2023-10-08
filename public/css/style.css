@@ -138,6 +138,9 @@ body {
   display: flex;
   margin-top: auto;
 }
+.hide-button {
+  display: none;
+}
 
 .user img {
   border-radius: 50%;

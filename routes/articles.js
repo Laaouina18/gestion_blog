@@ -22,11 +22,15 @@ router.get('/add', articlesController.getAddArticleForm);
 
 // Route to handle the form submission and file upload
 router.post('/add', multerUpload.single('image'), articlesController.createArticle);
+// Ajouter la route pour afficher le formulaire d'édition
+router.get('/edit/:id', articlesController.getEditArticleForm);
+// Ajouter la route pour traiter la soumission du formulaire d'édition
+router.post('/edit/:id', multerUpload.single('image'), articlesController.updateArticle);
 
 // Other routes
 router.get('/', articlesController.getArticles);
 router.get('/:id', articlesController.getArticleById);
-router.delete('/:id', articlesController.deleteArticle);
+router.get('/delete/:id', articlesController.deleteArticle);
 router.get('/search', articlesController.searchArticles);
 
 module.exports = router;

@@ -14,7 +14,7 @@ class Article {
     }
 
     static getAllArticles(callback) {
-        db.query('SELECT * FROM articles', (err, articles) => {
+        db.query('SELECT * FROM articles INNER JOIN categories', (err, articles) => {
             if (err) throw err;
             const formattedArticles = articles.map(article => new Article(article));
             callback(formattedArticles);

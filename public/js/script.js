@@ -16,3 +16,19 @@ function check(){
     $(".icons>span").hide(400);
     $("> span",this).show(400);
   });
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const dropdownBtn = document.getElementById("dropdown-btn");
+    const editButtons = document.querySelectorAll(".edit-button");
+    const deleteButtons = document.querySelectorAll(".delete-button");
+
+    dropdownBtn.addEventListener("click", function() {
+        editButtons.forEach(button => {
+            button.classList.toggle("hide-button");
+        });
+        deleteButtons.forEach(button => {
+            button.classList.toggle("hide-button");
+        });
+    });
+});

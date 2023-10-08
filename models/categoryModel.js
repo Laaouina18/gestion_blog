@@ -20,7 +20,7 @@ class Category {
         });
     }
 
-    static getCategorybyID(callback,ID){
+    static getCategorybyID(ID,callback){
         db.query('SELECT *FROM categories WHERE IdCategorie=?',[ID],(err,categories)=>{
             if(err) throw err;
             const formattedCategories=categories.map(categories=>new Category(err,categories));
