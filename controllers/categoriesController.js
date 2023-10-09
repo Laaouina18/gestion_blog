@@ -89,6 +89,15 @@ exports.searchCategory = (req, res) => {
     });
 };
 exports.getEditCategoryForm = (req, res) => {
+    const CategorieId = req.params.id;
+Category.getCategorybyID(CategorieId, (foundCategory) => {
+        if (!foundCategory) {
+            return res.status(404).send("categorie non trouvé.");
+        }
+      
+            res.render('edit-Catégorie', { categorie: foundCategory });
+       
+    });  
     const categoryId = req.params.id;
     Category.getCategorybyID(categoryId, (foundCategory) => {
         if (!foundCategory) {

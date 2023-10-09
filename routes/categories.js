@@ -3,6 +3,8 @@ const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
 const path=require('path');
 const multer=require('multer');
+
+
 const storage=multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,path.join(__dirname,'..','public','uploads'));
@@ -17,10 +19,10 @@ const multerUpload=multer({storage:storage});
 router.get('/', categoriesController.getAllCategories);
 router.get('/add',categoriesController.getAddCategoryForm);
 router.get('/edit/:id', categoriesController.getEditCategoryForm);
-// Ajouter la route pour traiter la soumission du formulaire d'édition
+
 router.post('/edit/:id', multerUpload.single('image'), categoriesController.updateCategory);
 router.post('/add',multerUpload.single('image'), categoriesController.createCategory);
 router.get('/:id', categoriesController.getCategoryById);
-// Autres routes et configurations nécessaires
+
 router.get('/delete/:id', categoriesController.deleteCategory);
 module.exports = router;

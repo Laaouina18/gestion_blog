@@ -8,8 +8,6 @@ const multer = require('multer');
 
 const app = express();
 
-// Middleware pour gérer le téléchargement de fichiers
-
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
