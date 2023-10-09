@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= article.Titre %></title>
-</head>
-<body>
+<%- include('nav.ejs') %>
     <h1><%= article.Titre %></h1>
     <p><%= article.Description %></p>
     <p>Date de Publication: <%= article.date %></p>
     <p>Auteur: <%= article.autheur %></p>
     <img src="<%= article.image %>" alt="Image de l'article">
-</body>
-</html>
+    <%- include('footer.ejs') %>
